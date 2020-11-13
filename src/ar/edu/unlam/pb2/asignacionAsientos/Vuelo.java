@@ -1,11 +1,14 @@
 package ar.edu.unlam.pb2.asignacionAsientos;
 
+import java.util.HashSet;
+
 public class Vuelo {
 
 	private Integer id;
 	private String origen;
 	private String destino;
 	private Avion  avion;
+	private HashSet<Pasajero> pasajerosAsignadosAlVuelo; 
 	
 	
 	public Vuelo(Integer id, String origen, String destino, Avion avion) {
@@ -13,6 +16,7 @@ public class Vuelo {
 		this.origen = origen;
 		this.destino = destino;
 		this.avion = avion;
+		this.pasajerosAsignadosAlVuelo = new HashSet<>();
 	}
 	
 	
@@ -71,6 +75,16 @@ public class Vuelo {
 	
 	public void setAvion(Avion avion) {
 		this.avion = avion;
+	}
+
+
+	public HashSet<Pasajero> getPasajerosAsignadosAlVuelo() {
+		return pasajerosAsignadosAlVuelo;
+	}
+
+
+	public void setPasajerosAsignadosAlVuelo(HashSet<Pasajero> pasajerosAsignadosAlVuelo) {
+		this.pasajerosAsignadosAlVuelo = pasajerosAsignadosAlVuelo;
 	}
 	
 	

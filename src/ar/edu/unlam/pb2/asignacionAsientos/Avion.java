@@ -9,10 +9,11 @@ public class Avion {
 	private ArrayList <String> listaAsientos;
 	
 	
-	public Avion(Integer id, String matricula, ArrayList<String> listaAsientos) {
+	public Avion(Integer id, String matricula) {
 		this.id = id;
 		Matricula = matricula;
-		this.listaAsientos = listaAsientos;
+		this.listaAsientos = new ArrayList<>();
+		generarAsientos();
 	}
 	
 	
@@ -48,7 +49,13 @@ public class Avion {
 		return false;
 	}
 	
-	
+	private void generarAsientos() {
+		String numAsiento = "";
+		for(int i=1; i<=30; i++) {
+			numAsiento = i + "";
+			this.listaAsientos.add(numAsiento);
+		}
+	}
 	
 	
 	@Override

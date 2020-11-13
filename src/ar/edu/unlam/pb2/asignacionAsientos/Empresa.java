@@ -9,6 +9,7 @@ public class Empresa {
 	private HashSet<Pasajero> Pasajeros;
 	private HashSet<AsignacionAsiento> asignacionesAsientos;
 	private HashSet<Avion> aviones;
+	private Integer idAsignacion = 1; 
 
 	public Empresa(String nombre) {
 
@@ -76,20 +77,21 @@ public class Empresa {
 		return null;
 	}
 	
-	
-	
-//	public Boolean asignarPasajeroAUnVuelo(Integer idVuelo, Integer dni) {
-//		Vuelo vueloBuscado = buscarVuelo(idVuelo);
-//		Pasajero pasajeroBuscado = buscarPasajero(dni);
-//		
-//		if(vueloBuscado!=null && pasajeroBuscado!=null) {
-//			
-//		}
-//		
-//		return null;
-//	}
-	
-	
+	public Boolean asignarPasajeroAUnVuelo(Integer idVuelo, Integer dni) {
+		Boolean asignacionExitosa = false;
+		
+		Vuelo vueloBuscado = buscarVuelo(idVuelo);
+		Pasajero pasajeroBuscado = buscarPasajero(dni);
+		if(vueloBuscado!=null && pasajeroBuscado!=null){
+			for(AsignacionAsiento asignacion : this.asignacionesAsientos) {
+				if(asignacion.getVuelo().equals(vueloBuscado) && asignacion.getPasajero().equals(pasajeroBuscado)) {
+					vueloBuscado.getPasajerosAsignadosAlVuelo().add(pasajeroBuscado);
+					asignacionExitosa = true;
+				}
+			}
+		}
+		return asignacionExitosa;
+	}
 	
 	public Boolean verificarSiExisteUnAsientoEnUnAvion(Integer idAvion, String asiento) {
 		Boolean existeAsiento = false;
@@ -109,7 +111,7 @@ public class Empresa {
 		
 		if(vueloBuscado!=null) {
 			for(AsignacionAsiento asignacion : this.asignacionesAsientos) {
-				if(asignacion.getVuelo().getId().equals(idVuelo)) { //VER ESTA PARTE, poruqe si la asignacion existe seria que el asiento por ende esta ocupadoo??????
+				if(asignacion.getVuelo().getId().equals(idVuelo)) { 
 					if(asignacion.getAsciento().equals(asiento)) {
 						return false;
 					}
@@ -118,7 +120,6 @@ public class Empresa {
 		}
 		return true;
 	}
-	
 	
 	//Registra una asignacion de asiento. Es PRIVADO ya que no puede realizarse la asignacion directamente,
 	//sino que se debe invocar el metodo >>>>>> asignarAsientoPasajeroParaUnVuelo(....) donde se verifica antes de 
@@ -129,27 +130,24 @@ public class Empresa {
 			this.asignacionesAsientos.add(asignacion);
 	}
 	
-	
-	//VERIFICAR!!!!!!!!!!!!!!!
 	public Boolean asignarAsientoPasajeroParaUnVuelo(Integer idVuelo, Integer dni, String numeroAsiento) {
 		Boolean asignacionExitosa = false;
 		
 		Pasajero pasajeroBuscado = buscarPasajero(dni);
 		Vuelo vueloBuscado = buscarVuelo(idVuelo);
-		Integer idAsignacion = 1; 
+		
 		
 		if(pasajeroBuscado!=null) {
 			if(verificarAsientoDiponibleParaUnVuelo(idVuelo, numeroAsiento)) {
-				idAsignacion++;
 				this.realizarUnaAsignacion(idAsignacion, vueloBuscado, pasajeroBuscado, numeroAsiento);
 				
+				idAsignacion++;
 				asignacionExitosa = true;
 			}
 		}
 		return asignacionExitosa;
 	}
 
-	
 	public HashSet<String> obtenerListaDeAsientoDeUnAvion(Integer idAvion) {
 		HashSet<String> listaDeAsientos = new HashSet<>();
 		
@@ -160,7 +158,6 @@ public class Empresa {
 		return listaDeAsientos;
 	}
 
-	
 	public HashSet<String> obtenerListaDeAsientoOcupadosDeUnVuelo(Integer IdVuelo) {
 		Vuelo vueloBuscado = buscarVuelo(IdVuelo);
 		
@@ -181,7 +178,6 @@ public class Empresa {
 		return listaDeAsientosOcupados;
 	}
 	
-	
 	public HashSet<String> obtenerListaDeAsientoDisponibleDeUnVuelo(Integer IdVuelo) {
 		Vuelo vueloBuscado = buscarVuelo(IdVuelo);
 		
@@ -195,8 +191,6 @@ public class Empresa {
 		
 		return  listaAsientos;
 	}
-	
-	
 	
 	public Boolean cambiarAsientoDeUnPasajeroParaUnVuelo(Integer idVuelo, Integer dni, String nuevoAsiento) {
 		Boolean cambioDeAsientoExitoso = false;
@@ -214,6 +208,22 @@ public class Empresa {
 			}
 		}
 		return cambioDeAsientoExitoso;
+	}
+
+	public HashSet<AsignacionAsiento> getAsignacionesAsientos() {
+		return asignacionesAsientos;
+	}
+
+	public void setAsignacionesAsientos(HashSet<AsignacionAsiento> asignacionesAsientos) {
+		this.asignacionesAsientos = asignacionesAsientos;
+	}
+
+	public HashSet<Pasajero> getPasajeros() {
+		return Pasajeros;
+	}
+
+	public void setPasajeros(HashSet<Pasajero> pasajeros) {
+		Pasajeros = pasajeros;
 	}
 
 	

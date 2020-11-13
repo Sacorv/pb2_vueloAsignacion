@@ -2,7 +2,7 @@ package ar.edu.unlam.pb2.asignacionAsientos;
 
 public class AsignacionAsiento {
 	
-	private Integer id; //Nro de identificacion de cada lista de asientos y el string asiento seria el asiento especifico
+	private Integer id; 
 	private Vuelo vuelo;
 	private Pasajero pasajero;
 	private String asiento;
